@@ -1,0 +1,14 @@
+{
+  "name": "github-trending",
+  "version": "1.0.0",
+  "description": "A little widget that fetches the latest trending repos from github for a given language",
+  "main": "index.js",
+  "scripts": {
+    "test": "none"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "github": "^0.2.3"
+  }
+}

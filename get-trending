@@ -1,0 +1,60 @@
+// usage:
+// node get-weather.js [city] [reagion] [units]
+
+// avoid HTTPS errors
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+
+var http  = require('http'),
+  https = require('https'),
+  query = require('querystring');
+var GitHubApi = require("github");
+
+var github = new GitHubApi({
+    // required
+    version: "3.0.0",
+    // optional
+    debug: true,
+    protocol: "https",
+    // host: "github.my-GHE-enabled-company.com",
+    // pathPrefix: "/api/v3", // for some GHEs
+    timeout: 5000,
+    headers: {
+        "user-agent": "My-Cool-GitHub-App" // GitHub is happy with a unique user agent
+    }
+});
+
+// var options = {
+  // language  : process.argv[2],
+  // days: process.argv[3],
+  // units : process.argv[4].toLowerCase(),
+  // static: process.argv[5] === 'static'
+// };
+getTrending({}, function (data) {
+    printResults(data || {});
+});
+
+
+function printResults (data) {
+  // output formatting
+  // data.location = options.city +', '+ options.region;
+  console.log(JSON.stringify(data));
+}
+    // -H "Accept: application/vnd.github.preview"            \
+
+function getTrending (options, callback) {
+  var url = "https://api.github.com/search/repositories";
+
+  var params = {
+    q     : "languate:Swift",
+    sort   : "stars",
+    order: 'desc'
+  };
+
+  var request = github.search.repos(params, function (data) {
+    callback(data);
+  });
+
+  // request.on('error', function (e) {
+  //   callback({errozr: e.message});
+  // });
+}
